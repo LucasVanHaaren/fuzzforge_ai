@@ -1,0 +1,11 @@
+{
+  "tool": {
+    "name": "gitleaks",
+    "version": "8.18.0"
+  },
+  "summary": {
+    "total_issues": 0,
+    "by_severity": {}
+  },
+  "findings": []
+}
