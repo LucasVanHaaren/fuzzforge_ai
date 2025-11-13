@@ -1,0 +1,48 @@
+name: firmware_analysis
+version: "1.0.0"
+vertical: reverse
+description: "Do some firmware analysis"
+author: "FuzzForge Team"
+tags:
+  - "firmware"
+  - "iot"
+
+workspace_isolation: "isolated"
+
+default_parameters:
+  target_file: null
+
+parameters:
+  type: object
+  required:
+    - target_file
+  properties:
+    target_file:
+      type: string
+      description: "Firmware image to analyze"
+
+output_schema:
+  type: object
+  properties:
+    findings:
+      type: array
+      description: "Artefacts found after unblob analysis"
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+          severity:
+            type: string
+          category:
+            type: string
+          recommendation:
+            type: string
+    summary:
+      type: object
+      description: "unblob execution summary"
+      properties:
+        files_extracted:
+          type: integer
+        execution_time:
+          type: number

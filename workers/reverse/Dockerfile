@@ -13,6 +13,8 @@ WORKDIR /app
 RUN <<EOF
 set -eux -o pipefail
 
+# Install capa
+
 echo "Installing system dependencies..."
 apt-get update && apt-get install -y build-essential clang llvm git curl wget
 rm -rf /var/lib/apt/lists/*
@@ -30,6 +32,33 @@ mkdir -p ${SITE_PACKAGES}/rules
 
 echo "Downloading and installing capa rules version ${CAPA_RULES_VERSION}..."
 curl -sL "${CAPA_RULES_URL}" | tar --strip-components 1 -C ${SITE_PACKAGES}/rules -xzvf -
+
+# Install unblob
+
+echo "Installing system dependencies..."
+apt-get update
+apt-get install --no-install-recommends -y \
+    android-sdk-libsparse-utils \
+    erofs-utils \
+    lz4 \
+    lziprecover \
+    lzop \
+    p7zip-full \
+    partclone \
+    unar \
+    xz-utils \
+    libmagic1 \
+    zstd \
+    e2fsprogs
+
+echo "Installing custom unblob dependencies..."
+curl -L -o sasquatch_1.0.deb "https://github.com/onekey-sec/sasquatch/releases/download/sasquatch-v4.5.1-5/sasquatch_1.0_$(dpkg --print-architecture).deb"
+dpkg -i sasquatch_1.0.deb
+rm -f sasquatch_1.0.deb
+
+echo "Installing unblob"
+pip install unblob --break-system-packages
+
 EOF
 
 #############################
