@@ -369,6 +369,59 @@ services:
           memory: 256M
 
   # ============================================================================
+  # Vertical Worker: Cracking
+  # ============================================================================
+  worker-cracking:
+    build:
+      context: ./workers/cracking
+      dockerfile: Dockerfile
+    container_name: fuzzforge-worker-cracking
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      temporal:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      # Temporal configuration
+      TEMPORAL_ADDRESS: temporal:7233
+      TEMPORAL_NAMESPACE: default
+
+      # Worker configuration
+      WORKER_VERTICAL: cracking
+      WORKER_TASK_QUEUE: cracking-queue
+      MAX_CONCURRENT_ACTIVITIES: 5
+
+      # Storage configuration (MinIO)
+      STORAGE_BACKEND: s3
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: fuzzforge
+      S3_SECRET_KEY: fuzzforge123
+      S3_BUCKET: targets
+      S3_REGION: us-east-1
+      S3_USE_SSL: "false"
+
+      # Cache configuration
+      CACHE_DIR: /cache
+      CACHE_MAX_SIZE: 10GB
+      CACHE_TTL: 7d
+
+      # Logging
+      LOG_LEVEL: INFO
+      PYTHONUNBUFFERED: 1
+    volumes:
+      # Mount workflow code (read-only) for dynamic discovery
+      - ./backend/toolbox:/app/toolbox:ro
+      # Mount AI module for A2A wrapper access
+      - ./ai/src:/app/ai_src:ro
+      # Worker cache for downloaded targets
+      - worker_cracking_cache:/cache
+    networks:
+      - fuzzforge-network
+    restart: "no"
+
+  # ============================================================================
   # Vertical Worker: Secret Detection
   # ============================================================================
   worker-secrets:
@@ -648,6 +701,8 @@ volumes:
     name: fuzzforge_worker_rust_cache
   worker_python_cache:
     name: fuzzforge_worker_python_cache
+  worker_cracking_cache:
+    name: fuzzforge_worker_cracking_cache
   worker_secrets_cache:
     name: fuzzforge_worker_secrets_cache
   worker_android_cache:
