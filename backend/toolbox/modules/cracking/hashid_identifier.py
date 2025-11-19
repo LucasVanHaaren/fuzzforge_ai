@@ -74,7 +74,7 @@ class HashIdIdentifier(BaseModule):
 
         return True
 
-    def execute(self, config: Dict[str, Any], workspace: Path) -> ModuleResult:
+    async def execute(self, config: Dict[str, Any], workspace: Path) -> ModuleResult:
         """
         Execute Hash Identification on a hash string.
 
