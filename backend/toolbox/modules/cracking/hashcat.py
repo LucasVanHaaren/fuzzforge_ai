@@ -166,7 +166,7 @@ class Hashcat(BaseModule):
                 findings=[self.create_finding(
                     title="Cracked Hash",
                     description=f"The hash '{hash_str}' was cracked to: {plaintext}",
-                    severity="info",
+                    severity="critical",
                     category="cracking",
                     metadata={
                         "hash_input": hash_str,
