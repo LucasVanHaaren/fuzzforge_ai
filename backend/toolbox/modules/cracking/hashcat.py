@@ -114,7 +114,7 @@ class Hashcat(BaseModule):
                 "--outfile", str(potfile_path),  # Output file
                 "--outfile-format", "2",  # Output only cracked hashes
                 hash_str,
-                "/usr/share/wordlists/rockyou.txt",  # Wordlist
+                "/usr/share/wordlists/SecLists-master/Passwords/Leaked-Databases/rockyou.txt.tar.gz",  # Wordlist
             ]
 
             logger.info(f"Running Hashcat: {' '.join(cmd)}")

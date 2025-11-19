@@ -16,9 +16,13 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     wget \
+    unzip \
     python3 python3-pip \
     # Cleanup
     && rm -rf /var/lib/apt/lists/*
+
+
+RUN wget -c https://github.com/danielmiessler/SecLists/archive/master.zip -O SecList.zip && unzip SecList.zip -d /usr/share/wordlists && rm -f SecList.zip
 
 # Install Python dependencies for Temporal worker
 COPY requirements.txt /tmp/requirements.txt
