@@ -273,6 +273,8 @@ class HashCrackingWorkflow:
                 f"(plaintext: {results['summary'].get('plaintext', 'not found')})"
             )
 
+            print(results)
+
             return results
 
         except Exception as e:

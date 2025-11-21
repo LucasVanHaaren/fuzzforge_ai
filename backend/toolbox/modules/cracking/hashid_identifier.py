@@ -105,7 +105,7 @@ class HashIdIdentifier(BaseModule):
                 finding = self.create_finding(
                     title=f"Possible Hash Type: {hash_info.name}",
                     description=f"The hash '{hash_str}' may be of type: {hash_info.name}",
-                    severity="info",
+                    severity="low",
                     category="hash_identification",
                     metadata={
                         "hash_input": hash_str,
