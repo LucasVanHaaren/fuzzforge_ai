@@ -96,8 +96,8 @@ class HashIdIdentifier(BaseModule):
             # Compute
             hash_str = config["hash"]
             hashid = HashID()
-            results = list(hashid.identifyHash(hash_str))
-            # returns a list of HashInfo named tuples
+            # get the list of HashInfo named tuples (filtered to get only non-extended matches)
+            results = [h for h in hashid.identifyHash(hash_str) if not h.extended]
 
             # Create ModuleFinding objects for each identified hash type
             findings = []

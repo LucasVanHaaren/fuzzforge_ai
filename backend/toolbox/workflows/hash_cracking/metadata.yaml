@@ -1,0 +1,38 @@
+name: hash_cracking
+version: "1.0.0"
+vertical: cracking
+description: "Hash cracking using various tools and techniques"
+author: "FuzzForge Team"
+tags:
+  - "cracking"
+
+# Workspace isolation mode
+# Using "shared" mode for read-only APK analysis (no file modifications except decompilation output)
+workspace_isolation: "isolated"
+
+parameters:
+  type: object
+  required:
+    - target_hash
+  properties:
+    target_hash:
+      type: string
+      description: "Hash value to crack"
+    target_hash_type:
+      type: integer
+      description: "Type of the hash (in hashcat mode format)"
+      default: null
+
+output_schema:
+  type: object
+  properties:
+    sarif:
+      type: object
+      description: "SARIF-formatted findings from all Android security tools"
+    summary:
+      type: object
+      description: "Android security analysis summary"
+      properties:
+        plaintext:
+          type: string
+          description: "The cracked plaintext value of the hash"

@@ -1,5 +1,5 @@
 """
-Hash Cracking Module
+Hash cracking Workflow
 """
 
 # Copyright (c) 2025 FuzzingLabs
@@ -13,7 +13,14 @@ Hash Cracking Module
 #
 # Additional attribution and requirements are provided in the NOTICE file.
 
-from .hashid_identifier import HashIdIdentifier
-from .hashcat import Hashcat
+from .workflow import HashCrackingWorkflow
+from .activities import (
+    run_hashid,
+    run_hashcat,
+)
 
-__all__ = ["HashIdIdentifier", "Hashcat"]
+__all__ = [
+    "HashCrackingWorkflow",
+    "run_hashid",
+    "run_hashcat",
+]
