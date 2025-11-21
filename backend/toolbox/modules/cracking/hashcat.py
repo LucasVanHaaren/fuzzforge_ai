@@ -151,7 +151,7 @@ class Hashcat(BaseModule):
             plaintext = ""
             if potfile_path.exists():
                 with open(potfile_path, "r", encoding="utf-8", errors="ignore") as f:
-                    plaintext = f.readline()
+                    plaintext = f.readline().strip()
 
             # Create summary
             summary = {
